@@ -1,9 +1,27 @@
+import mongoose from 'mongoose'
 import app from './app.js'
 import { config } from './config/env.js'
 
 
-app.listen (config.port, () => {
+const start = async () => {
 
-    console.log (`Servidor iniciado en puerto ${config.port}`)
+    try {
+        
+        await mongoose.connect (config.mongoUri)
 
-})
+        console.log ('MongoDB conectado')
+
+        app.listen (config.port, () => {
+            console.log (`Servidor escuchando en puerto ${config.port}`)
+        })
+
+    } catch (err) {
+
+        console.error ('Error al iniciar servidor', err)
+        process.exit(1)
+
+    }
+
+}
+
+start()

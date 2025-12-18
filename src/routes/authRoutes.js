@@ -13,7 +13,7 @@ router.post ('/login', (req, res) => {
 
     if (password !== config.appPassword) return res.status(401).json ({ message: 'Contraseña incorrecta' })
 
-    const token = jwt.sign ({ access: true }, 'secret_key', { expiresIn: '8h' })
+    const token = jwt.sign ({ access: true }, config.jwtSecret, { expiresIn: '8h' })
     return res.json ({ token })
     
 })
